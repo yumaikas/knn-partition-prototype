@@ -16,7 +16,7 @@ for i, v in ipairs (iris.fieldnames) do
 		fields[v] = i
 		ranges[v] = {
 			min = tablex.reduce(min, iris:column_by_name(v)),
-			max = tablex.reduce(max, iris:column_by_name(v)),
+			max = tablex.reduce(max, iris:column_by_name(v)) + 0.000001,
 			normalize = normalize
 		}
 	end
@@ -52,7 +52,7 @@ partitions = {}
 local partition_degree = tonumber(arg[1])
 local partition_divisor = 1 / partition_degree
 for k, row in ipairs(train) do
-	local part_width = math.floor(row[fields.Petal_Width] / partition_divisor)
+	local part_width = math.floor(row[fields.Petal_Width] / partition_divisor) 
 	local part_length = math.floor(row[fields.Petal_Length] / partition_divisor)
 	local part = partitions[part_width] or {}
 	partitions[part_width] = part
@@ -63,9 +63,9 @@ end
 
 local total = 0
 
-for i=0, partition_degree, 1 do
+for i=0, partition_degree - 1, 1 do
 	local v = partitions[i] or {}
-	for ii=0, partition_degree, 1 do
+	for ii=0, partition_degree - 1, 1 do
 		local vv = v[ii] or {}
 		-- foldr for count
 		io.write(tostring(#vv) .. "\t")
