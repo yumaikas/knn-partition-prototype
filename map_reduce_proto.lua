@@ -75,4 +75,4 @@ for i=0, partition_degree - 1, 1 do
 	--print (tostring(#v))
 end
 
-print ("Total partitions: " .. total)
+print ("Total records in partitions: " .. total)
